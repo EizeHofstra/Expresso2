@@ -15,8 +15,13 @@ app.use(errorhandler());
 
 const PORT = process.env.PORT || 4000;
 
+const apiRouter = require('./api/api');
+
+app.use('/api', apiRouter);
+
+
 app.listen(PORT, () => {
     console.log(`Server listening at port: ${PORT}`);
-})
+});
 
 module.exports = app;
