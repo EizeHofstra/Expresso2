@@ -8,7 +8,7 @@ employeesRouter.use('/:employeeId/timesheets', timesheetRouter);
 const db = new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite');
 
 employeesRouter.param('employeeId', (req, res, next, id) => {
-    const sql = `SELECT * FROM Employee WHERE Employee.id = $id`
+    const sql = `SELECT * FROM Employee WHERE Employee.id = $id`;
     const values = { $id: id };
     db.get(sql, values, (err, employee) => {
         if (err) {
@@ -76,11 +76,11 @@ employeesRouter.put('/:employeeId', (req, res, next) => {
                          $wage: req.body.employee.wage,
                          $id: req.params.employeeId
         };
-        db.run(sql, values, (err) => {
+        db.run(sql, values, function(err){
             if (err) {
                 next(err);
             } else {
-                db.get(`SELECT * FROM Employee WHERE Employee.id = ${req.params.employeeId}`, (err, employee) => {
+                db.get(`SELECT * FROM Employee WHERE Employee.id = ${req.params.employeeId}`, function (err, employee) {
                     res.status(200).json({ employee: employee });
                 }
             )}
